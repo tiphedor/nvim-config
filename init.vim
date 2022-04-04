@@ -2,7 +2,6 @@
 "" Generic Config ""
 set cursorline " highlight the current line
 set hidden " todo
-set mouse=a " enable the mouse
 set number " line numbers
 set expandtab " use spaces for tabs
 set shiftwidth=2 " tabs size (ident)
@@ -10,9 +9,9 @@ set tabstop=2 " tabs size (tab char)
 set nobackup " needed by coc
 set nowritebackup " needed by coc
 set updatetime=300
-set shortmess+=c
-set completeopt=menuone,noinsert,noselect
-
+set shortmess+=c " improve autocomlete
+set completeopt=menuone,noinsert,noselect " improve autocomplete
+set clipboard=unnamed " link nvim clipboard with macos
 
 """""""""""""""""""""
 """""" Plugins """"""
@@ -25,6 +24,8 @@ call plug#begin("~/.vim/plugged")
   Plug 'jose-elias-alvarez/null-ls.nvim'
   Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
   Plug 'nvim-lua/plenary.nvim'
+
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
   " Telescope
   Plug 'BurntSushi/ripgrep'
@@ -78,7 +79,10 @@ let g:material_style = "darker"
 colorscheme dracula
 
 " Telescope
-
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 
 " import lua config
