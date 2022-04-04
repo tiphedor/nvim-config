@@ -32,6 +32,7 @@ call plug#begin("~/.vim/plugged")
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'lukas-reineke/indent-blankline.nvim'
   Plug 'Xuyuanp/nerdtree-git-plugin'
+  Plug 'norcalli/nvim-colorizer.lua'
 
   " Telescope
   Plug 'BurntSushi/ripgrep'
@@ -100,6 +101,12 @@ nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+nnoremap <leader>j <cmd>LspDef<cr>
+
+"""""""""""""""""""
+"" Custom keybind""
+nnoremap <leader>s <cmd>w<cr>
+nnoremap <leader>b <cmd>NERDTreeFocus<cr>
 
 
 " import lua config
