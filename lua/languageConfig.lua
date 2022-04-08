@@ -83,7 +83,7 @@ local on_attach = function(client, bufnr)
     vim.cmd("command! LspDiagLine lua vim.diagnostic.open_float()")
     vim.cmd("command! LspSignatureHelp lua vim.lsp.buf.signature_help()")
 
-    -- buf_map(bufnr, "n", "gd", ":LspDef<CR>")
+    buf_map(bufnr, "n", "<Leader>j", ":LspDef<CR>")
     --buf_map(bufnr, "n", "gr", ":LspRename<CR>")
     --buf_map(bufnr, "n", "gy", ":LspTypeDef<CR>")
     --buf_map(bufnr, "n", "K", ":LspHover<CR>")
@@ -107,13 +107,14 @@ require('lspconfig')['tsserver'].setup {
 
         client.resolved_capabilities.document_formatting = false
         client.resolved_capabilities.document_range_formatting = false
+ 
         local ts_utils = require("nvim-lsp-ts-utils")
         ts_utils.setup({})
         ts_utils.setup_client(client)
 
         -- buf_map(bufnr, "n", "gs", ":TSLspOrganize<CR>")
         -- buf_map(bufnr, "n", "gi", ":TSLspRenameFile<CR>")
-        --buf_map(bufnr, "n", "go", ":TSLspImportAll<CR>")
+        -- buf_map(bufnr, "n", "go", ":TSLspImportAll<CR>")
 
         on_attach(client, bufnr)
 

@@ -11,43 +11,29 @@ set nowritebackup " needed by coc
 set updatetime=300
 set shortmess+=c " improve autocomlete
 set completeopt=menuone,noinsert,noselect " improve autocomplete
-set clipboard=unnamed " link nvim clipboard with macos
+set clipboard=unnamed " link nvim clipboard with macos 
+let mapleader = "\<C-i>"
+set ic " ignore case for searches
 
-"""""""""""""""""""""
 """""" Plugins """"""
 call plug#begin("~/.vim/plugged")
-  " Themes
+  " Color schemes
   Plug 'marko-cerovac/material.nvim'
-  Plug 'christianchiarulli/nvcode-color-schemes.vim'
-  Plug 'dracula/vim'
-  Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 
-  Plug 'scrooloose/nerdtree'
-  Plug 'ryanoasis/vim-devicons'
-  Plug 'neovim/nvim-lspconfig'
-  Plug 'jose-elias-alvarez/null-ls.nvim'
-  Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
-  Plug 'nvim-lua/plenary.nvim'
-  Plug 'nvim-lualine/lualine.nvim'
-  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-  Plug 'lukas-reineke/indent-blankline.nvim'
-  Plug 'Xuyuanp/nerdtree-git-plugin'
-  Plug 'norcalli/nvim-colorizer.lua'
+  Plug 'scrooloose/nerdtree' " Tree view
+  Plug 'ryanoasis/vim-devicons' " Icons
+  Plug 'nvim-lua/plenary.nvim' " Utils lib, dependency of other plugs 
+  Plug 'nvim-lualine/lualine.nvim' " Bottom bar
+  Plug 'lukas-reineke/indent-blankline.nvim' " Show ident lines
+  Plug 'Xuyuanp/nerdtree-git-plugin' " Git status in treeview
+  Plug 'norcalli/nvim-colorizer.lua' " Show hex/css colors
+  Plug 'lewis6991/gitsigns.nvim' " Git status in the gutter + inline blame
+  Plug 'akinsho/bufferline.nvim', { 'tag': '*' } " Top bufferline
 
-  " Telescope
-  Plug 'BurntSushi/ripgrep'
+  " Telescope - file nav/grepper
+  Plug 'BurntSushi/ripgrep' " Depedency of telescope
   Plug 'nvim-telescope/telescope.nvim'
-  Plug 'sharkdp/fd'
-  
-  " Autocomplete
-  Plug 'hrsh7th/cmp-nvim-lsp'
-  Plug 'hrsh7th/cmp-buffer'
-  Plug 'hrsh7th/cmp-path'
-  Plug 'hrsh7th/cmp-cmdline'
-  Plug 'hrsh7th/nvim-cmp'
-
-  " Snippets
-  Plug 'SirVer/ultisnips'
+  Plug 'sharkdp/fd' " Depedency of telescope
 call plug#end()
 
 """""""""""""""""""""
@@ -58,14 +44,16 @@ let g:NERDTreeShowHidden = 1
 let g:NERDTreeMinimalUI = 1
 let g:NERDTreeIgnore = []
 let g:NERDTreeStatusline = ''
+let g:NERDTreeWinSize=45
+
 " Autoopen NERDTree if nvim is started without arguments, then unfocus it by default
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | wincmd p | endif
+
 " Exit Vim if NERDTree is the only window remaining in the only tab.
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 " If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
-autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
-    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
+autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 | let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 
 " Sync openned file with what NERDTree is showing
   function! IsNERDTreeOpen()
@@ -82,26 +70,20 @@ autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_
   endfunction
   autocmd BufRead * call SyncTree() " Run when buffer changes
 
+
 " set term colors and enable color scheme
 if (has("termguicolors"))
  set termguicolors
 endif
 syntax enable
-
-"let g:material_style = "darker"
-"colorscheme material
-
-"colorscheme dracula
-"colorscheme nvcode
-let g:tokyonight_style = "night"
-colorscheme tokyonight
+let g:material_style = "darker"
+colorscheme material
 
 " Telescope
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-nnoremap <leader>j <cmd>LspDef<cr>
 
 """""""""""""""""""
 "" Custom keybind""
