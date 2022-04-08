@@ -14,6 +14,7 @@ call plug#begin("~/.vim/plugged")
   Plug 'lewis6991/gitsigns.nvim' " Git status in the gutter + inline blame
   Plug 'akinsho/bufferline.nvim', { 'tag': '*' } " Top bufferline
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug 'windwp/nvim-ts-autotag'
 
   " Telescope - file nav/grepper
   Plug 'BurntSushi/ripgrep' " Depedency of telescope
