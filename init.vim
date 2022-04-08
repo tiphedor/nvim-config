@@ -76,6 +76,25 @@ endfunction
 inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+nmap <silent> <leader>jd <Plug>(coc-definition)
+nmap <silent> <leader>jt <Plug>(coc-type-definition)
+nmap <silent> <leader>jj <Plug>(coc-implementation)
+nmap <silent> <leader>jr <Plug>(coc-references)
+nmap <silent> <leader>rr <Plug>(coc-rename)
+nmap <silent> <leader>qq <cmd>CocAction<cr> 
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
 
 """"""""""""""""""
