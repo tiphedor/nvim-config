@@ -13,6 +13,7 @@ call plug#begin("~/.vim/plugged")
   Plug 'norcalli/nvim-colorizer.lua' " Show hex/css colors
   Plug 'lewis6991/gitsigns.nvim' " Git status in the gutter + inline blame
   Plug 'akinsho/bufferline.nvim', { 'tag': '*' } " Top bufferline
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
   " Telescope - file nav/grepper
   Plug 'BurntSushi/ripgrep' " Depedency of telescope

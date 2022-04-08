@@ -3,4 +3,4 @@ require "lualineConfig"
 require "indentBlanklineConfig"
 require "colorizerConfig"
 require "gitsignsConfig"
-
+require "treesitterConfig"
