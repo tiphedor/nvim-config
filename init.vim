@@ -91,6 +91,16 @@ nnoremap <leader>s <cmd>w<cr>
 nnoremap <leader>b <cmd>NERDTreeFocus<cr>
 
 
+"""""""""""""""""""""""""
+"" Other generic stuff ""
+
+" Highlight on yank
+augroup highlight_yank
+    autocmd!
+    au TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=400}
+augroup END
+
+
 " import lua config
 luafile ~/.config/nvim/lua/init.lua
 
