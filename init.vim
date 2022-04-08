@@ -32,7 +32,7 @@ set tabstop=2 " tabs size (tab char)
 set updatetime=300
 set completeopt=menuone,noinsert,noselect " improve autocomplete
 set clipboard=unnamed " link nvim clipboard with macos 
-let mapleader = "\<C-i>"
+let mapleader = "\<C-l>"
 set ic " ignore case for searches
 set termguicolors
 syntax enable
