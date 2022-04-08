@@ -1,3 +1,4 @@
 {
+  "eslint.autoFixOnSave": true,
   "coc.preferences.colorSupport": false
 }
