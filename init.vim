@@ -45,7 +45,7 @@ augroup highlight_yank
     au TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=400}
 augroup END
 
-"""" CoC - Keybinds
+"""" Generic - Keybinds
 nnoremap <leader>s <cmd>w<cr>
 
 """""""""""""
