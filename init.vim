@@ -1,26 +1,10 @@
-""""""""""""""""""""
-"" Generic Config ""
-set cursorline " highlight the current line
-set hidden " todo
-set number " line numbers
-set expandtab " use spaces for tabs
-set shiftwidth=2 " tabs size (ident)
-set tabstop=2 " tabs size (tab char)
-set nobackup " needed by coc
-set nowritebackup " needed by coc
-set updatetime=300
-set shortmess+=c " improve autocomlete
-set completeopt=menuone,noinsert,noselect " improve autocomplete
-set clipboard=unnamed " link nvim clipboard with macos 
-let mapleader = "\<C-i>"
-set ic " ignore case for searches
-
 """""" Plugins """"""
 call plug#begin("~/.vim/plugged")
   " Color schemes
   Plug 'marko-cerovac/material.nvim'
 
   Plug 'scrooloose/nerdtree' " Tree view
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'ryanoasis/vim-devicons' " Icons
   Plug 'nvim-lua/plenary.nvim' " Utils lib, dependency of other plugs 
   Plug 'nvim-lualine/lualine.nvim' " Bottom bar
@@ -36,10 +20,64 @@ call plug#begin("~/.vim/plugged")
   Plug 'sharkdp/fd' " Depedency of telescope
 call plug#end()
 
-"""""""""""""""""""""
-"" Plugins Config  ""
+""""""""""""""""""""
+"" Generic Config ""
+set cursorline " highlight the current line
+set number " line numbers
+set expandtab " use spaces for tabs
+set shiftwidth=2 " tabs size (ident)
+set tabstop=2 " tabs size (tab char)
+set updatetime=300
+set completeopt=menuone,noinsert,noselect " improve autocomplete
+set clipboard=unnamed " link nvim clipboard with macos 
+let mapleader = "\<C-i>"
+set ic " ignore case for searches
+set termguicolors
+syntax enable
+let g:material_style = "darker"
+colorscheme material
 
-""" NERDTree
+" Highlight on yank
+augroup highlight_yank
+    autocmd!
+    au TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=400}
+augroup END
+
+"""" CoC - Keybinds
+nnoremap <leader>s <cmd>w<cr>
+
+"""""""""""""
+"""" CoC """"
+nmap <leader>rs <Plug>(coc-rename)
+set hidden " todo
+set nobackup " needed by coc
+set nowritebackup " needed by coc
+set shortmess+=c " improve autocomlete
+if has("nvim-0.5.0") || has("patch-8.1.1564")
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+
+" Use tab to scroll through suggestions
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+"""" CoC - Keybinds
+inoremap <silent><expr> <c-space> coc#refresh()
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+
+""""""""""""""""""
+"""" NerdTree """"
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeMinimalUI = 1
 let g:NERDTreeIgnore = []
@@ -70,36 +108,17 @@ autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_
   endfunction
   autocmd BufRead * call SyncTree() " Run when buffer changes
 
+"""" NerdTree - Keybinds 
+nnoremap <leader>b <cmd>NERDTreeFocus<cr>
 
-" set term colors and enable color scheme
-if (has("termguicolors"))
- set termguicolors
-endif
-syntax enable
-let g:material_style = "darker"
-colorscheme material
 
-" Telescope
+"""""""""""""""""""
+"""" Telescope """"
+"""" Telescope - Keybinds 
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-
-"""""""""""""""""""
-"" Custom keybind""
-nnoremap <leader>s <cmd>w<cr>
-nnoremap <leader>b <cmd>NERDTreeFocus<cr>
-
-
-"""""""""""""""""""""""""
-"" Other generic stuff ""
-
-" Highlight on yank
-augroup highlight_yank
-    autocmd!
-    au TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=400}
-augroup END
-
 
 " import lua config
 luafile ~/.config/nvim/lua/init.lua
