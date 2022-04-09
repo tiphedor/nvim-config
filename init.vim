@@ -47,6 +47,8 @@ augroup END
 
 """" Generic - Keybinds
 nnoremap <leader>s <cmd>w<cr>
+nnoremap <silent><leader><Tab> :BufferLineCycleNext<CR>
+nnoremap <silent><leader><S-Tab> :BufferLineCyclePrev<CR>
 
 """""""""""""
 """" CoC """"
@@ -128,6 +130,14 @@ autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_
     endif
   endfunction
   autocmd BufRead * call SyncTree() " Run when buffer changes
+
+" hide the path at the top of the window
+augroup nerdtreehidecwd
+  autocmd!
+  autocmd FileType nerdtree setlocal conceallevel=3
+          \ | syntax match NERDTreeHideCWD #^[</].*$# conceal
+          \ | setlocal concealcursor=n
+augroup end
 
 """" NerdTree - Keybinds 
 nnoremap <leader>b <cmd>NERDTreeFocus<cr>
