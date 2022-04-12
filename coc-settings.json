@@ -1,4 +1,8 @@
 {
   "eslint.autoFixOnSave": true,
-  "coc.preferences.colorSupport": false
+  "coc.preferences.colorSupport": false,
+  "diagnostic.refreshOnInsertMode": true,
+  "diagnostic.virtualTextCurrentLineOnly": false,
+  "diagnostic.virtualText": true,
+  "suggest.noselect": false
 }
